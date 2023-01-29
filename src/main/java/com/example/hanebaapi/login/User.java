@@ -8,63 +8,78 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/*
+* Entity 정의 및 요청
+* 요청, 응답 클래스 선언
+* Spring Security (UserDetails 상속)
+*/
 @NoArgsConstructor
 @Getter
 @Entity(name = "user")
-@Table(name = "tbl_users")
 public class User extends BaseTimeEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
-    private String id;
-    @Column(name = "Password")
+    private Long id;
+    private String email;
     private String password;
-    @Column(name = "Name")
-    private String name;
-    @Column(name = "Age")
-    private int age;
-    @Column(name = "Gender")
     private String gender;
+    private String dropYn;
+    private LocalDateTime lastLoginTime;
 
     @Builder
-    private User(String id, String password, String name, int age, String gender) {
+    private User(Long id, String email, String password, String gender, String dropYn) {
         this.id = id;
+        this.email = email;
         this.password = password;
-        this.name = name;
-        this.age = age;
         this.gender = gender;
+        this.dropYn = dropYn;
     }
 
     @Getter
     @Setter
     public static class RequestDTO {
-        private String id;
+        private String email;
         private String password;
+        private String gender;
+        private String dropYn;
 
         public User toEntity() {
             return User.builder()
-                    .id(id)
+                    .email(email)
                     .password(password)
+                    .gender(gender)
+                    .dropYn(dropYn)
                     .build();
         }
     }
 
+    @Getter
     public static class ResponseDTO {
-        private String id;
-        private String name;
-        private int age;
+        private Long id;
+        private String email;
+        private String password;
         private String gender;
+        private String dropYn;
+        private String lastLoginTime;
+        private String registerTime;
+        private String modifyTime;
 
         public ResponseDTO(User user) {
             this.id = user.id;
-            this.name = user.name;
-            this.age = user.age;
+            this.email = user.email;
+            this.password = user.password;
             this.gender = user.gender;
+            this.dropYn = user.dropYn;
+            this.lastLoginTime = user.toStringDateTime(user.getLastLoginTime());
+            this.registerTime = user.toStringDateTime(user.getCreatedDate());
+            this.modifyTime = user.toStringDateTime(user.getModifiedDate());
         }
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -82,7 +97,7 @@ public class User extends BaseTimeEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.id;
+        return this.email;
     }
 
     @Override
