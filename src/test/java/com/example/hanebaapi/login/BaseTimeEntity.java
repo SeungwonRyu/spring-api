@@ -1,4 +1,4 @@
-package com.login;
+package com.example.hanebaapi.login;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

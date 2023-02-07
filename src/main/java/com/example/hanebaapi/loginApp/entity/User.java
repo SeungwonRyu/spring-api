@@ -1,4 +1,4 @@
-package com.loginApp.entity;
+package com.example.hanebaapi.loginApp.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

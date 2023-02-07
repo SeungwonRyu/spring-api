@@ -1,4 +1,4 @@
-package com.login;
+package com.example.hanebaapi.login;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

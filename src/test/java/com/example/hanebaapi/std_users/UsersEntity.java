@@ -1,4 +1,4 @@
-package com.std_users;
+package com.example.hanebaapi.std_users;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

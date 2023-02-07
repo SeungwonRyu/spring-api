@@ -1,4 +1,4 @@
-package com.login;
+package com.example.hanebaapi.login;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

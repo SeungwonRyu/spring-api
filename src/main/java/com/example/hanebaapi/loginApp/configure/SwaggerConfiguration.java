@@ -1,4 +1,4 @@
-package com.loginApp.configure;
+package com.example.hanebaapi.loginApp.configure;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(swaggerInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.loginApp.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.hanebaapi.loginApp.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .useDefaultResponseMessages(false);

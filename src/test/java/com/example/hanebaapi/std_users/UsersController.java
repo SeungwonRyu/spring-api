@@ -1,4 +1,4 @@
-package com.std_users;
+package com.example.hanebaapi.std_users;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1")
+@RequestMapping("/v2")
 public class UsersController {
     @Autowired
     UsersService usersServ;

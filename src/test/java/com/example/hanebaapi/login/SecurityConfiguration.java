@@ -1,4 +1,4 @@
-package com.login;
+package com.example.hanebaapi.login;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
