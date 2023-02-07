@@ -1,4 +1,4 @@
-package com.example.hanebaapi.login;
+package com.login;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

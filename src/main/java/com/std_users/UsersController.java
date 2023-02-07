@@ -1,4 +1,4 @@
-package com.example.hanebaapi.std_users;
+package com.std_users;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
