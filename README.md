@@ -1,6 +1,8 @@
 # Spring API
 ### 학습용
 
+----------------------------------
+
 ### Spring Boot, JPA, Spring Security, JWT
 ### Redis, Kafka
 
