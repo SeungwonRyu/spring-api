@@ -1,11 +1,11 @@
 package com.example.hanebaapi.loginApp.controller;
 
-import com.example.hanebaapi.loginApp.advice.exception.UserNotFoundException;
-import com.example.hanebaapi.loginApp.entity.User;
+import com.example.hanebaapi.loginApp.domain.dto.UserRequestDTO;
+import com.example.hanebaapi.loginApp.domain.dto.UserResponseDTO;
 import com.example.hanebaapi.loginApp.model.response.CommonResult;
 import com.example.hanebaapi.loginApp.model.response.ListResult;
 import com.example.hanebaapi.loginApp.model.response.SingleResult;
-import com.example.hanebaapi.loginApp.repository.UserJpaRepository;
+import com.example.hanebaapi.loginApp.service.UserService;
 import com.example.hanebaapi.loginApp.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,61 +14,54 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1")
 public class UserController {
-    private final UserJpaRepository userJpaRepository;
+    //private final UserJpaRepository userJpaRepository;
+    private final UserService userService;
     private final ResponseService responseService;
 
     // 유저 조회 (id)
     @GetMapping("/user/id/{id}")
-    public SingleResult<User> findUserById(@PathVariable Long id) {
-        return responseService.getSingleResult(
-                userJpaRepository.findById(id).orElseThrow(UserNotFoundException::new)
-        );
+    public SingleResult<UserResponseDTO> findUserById(@PathVariable Long id) {
+        return responseService.getSingleResult(userService.findById(id));
     }
 
     // 유저 조회 (email)
     @GetMapping("/user/email/{email}")
-    public SingleResult<User> findUserByEmail(@PathVariable String email) {
-        User user = userJpaRepository.findByEmail(email);
-
-        if(user == null) {
-            throw new UserNotFoundException();
-        } else {
-            return responseService.getSingleResult(user);
-        }
+    public SingleResult<UserResponseDTO> findUserByEmail(@PathVariable String email) {
+        return responseService.getSingleResult(userService.findByEmail(email));
     }
 
     // 모든 유저 조회
     @GetMapping("/users")
-    public ListResult<User> findAllUser() {
-        return responseService.getListResult(userJpaRepository.findAll());
+    public ListResult<UserResponseDTO> findAllUser() {
+        return responseService.getListResult(userService.findAllUser());
     }
 
     // 유저 등록
     @PostMapping("/user")
-    public SingleResult<User> save(@RequestParam String email, @RequestParam String name) {
-        User user = User.builder()
+    public SingleResult<Long> save(@RequestParam String email, @RequestParam String name) {
+        UserRequestDTO user = UserRequestDTO.builder()
                 .email(email)
                 .name(name)
                 .build();
 
-        return responseService.getSingleResult(userJpaRepository.save(user));
+        return responseService.getSingleResult(userService.save(user));
     }
 
     // 유저 정보 수정
     @PutMapping("/user")
-    public SingleResult<User> modify(@RequestParam String email, @RequestParam String name) {
-        User user = User.builder()
+    public SingleResult<Long> modify(@RequestParam String email, @RequestParam String name) {
+        UserRequestDTO user = UserRequestDTO.builder()
                 .email(email)
                 .name(name)
                 .build();
 
-        return responseService.getSingleResult(userJpaRepository.save(user));
+        return responseService.getSingleResult(userService.save(user));
     }
 
     // 유저 삭제
     @DeleteMapping("/user/{id}")
     public CommonResult delete(@PathVariable Long id) {
-        userJpaRepository.deleteById(id);
+        userService.delete(id);
         return responseService.getSuccessResult();
     }
 
