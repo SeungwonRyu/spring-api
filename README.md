@@ -1,10 +1,10 @@
 # Spring API
+### 학습용
 
-### Spring Boot 
-### JPA
-### Spring Security
-### Redis
-### Kafka
+----------------------------------
+
+### Spring Boot, JPA, Spring Security, JWT
+### Redis, Kafka
 
 ----------------------------------
 
@@ -12,6 +12,3 @@
 ### Restful API 생성 테스트
 ### 멀티 쓰레딩 데이터 수집 서버 등.
 
-----------------------------------
-
-### 학습용
