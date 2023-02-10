@@ -3,14 +3,16 @@ package com.example.hanebaapi.loginApp.service.response;
 import com.example.hanebaapi.loginApp.model.response.CommonResult;
 import com.example.hanebaapi.loginApp.model.response.ListResult;
 import com.example.hanebaapi.loginApp.model.response.SingleResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class ResponseService {
     // 단일 처리
-    public <T>SingleResult<T> getSingleResult(T data) {
+    public <T> SingleResult<T> getSingleResult(T data) {
         SingleResult<T> result = new SingleResult<>();
         result.setData(data);
         setSuccessResult(result);

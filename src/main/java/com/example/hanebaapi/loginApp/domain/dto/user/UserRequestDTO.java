@@ -1,28 +1,22 @@
-package com.example.hanebaapi.loginApp.domain.dto;
+package com.example.hanebaapi.loginApp.domain.dto.user;
 
 import com.example.hanebaapi.loginApp.domain.entity.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class UserRequestDTO {
     private String email;
     private String name;
-
-    @Builder
-    public UserRequestDTO(String email, String name) {
-        this.email = email;
-        this.name = name;
-    }
+    private String nickname;
 
     public User toEntity() {
         return User.builder()
                 .email(email)
                 .name(name)
+                .nickname(nickname)
                 .build();
     }
 

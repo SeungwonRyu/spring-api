@@ -1,17 +1,21 @@
 package com.example.hanebaapi.loginApp.service;
 
+import com.example.hanebaapi.loginApp.advice.exception.EmailLoginFailedException;
 import com.example.hanebaapi.loginApp.advice.exception.UserNotFoundException;
-import com.example.hanebaapi.loginApp.domain.dto.UserRequestDTO;
-import com.example.hanebaapi.loginApp.domain.dto.UserResponseDTO;
+import com.example.hanebaapi.loginApp.domain.dto.sign.UserLoginRequestDTO;
+import com.example.hanebaapi.loginApp.domain.dto.user.UserRequestDTO;
+import com.example.hanebaapi.loginApp.domain.dto.user.UserResponseDTO;
 import com.example.hanebaapi.loginApp.domain.entity.User;
 import com.example.hanebaapi.loginApp.repository.UserJpaRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -20,8 +24,8 @@ public class UserService {
     // 유저 등록
     @Transactional
     public Long save(UserRequestDTO userDTO) {
-        userJpaRepository.save(userDTO.toEntity());
-        return userJpaRepository.findByEmail(userDTO.getEmail()).getId();
+        User saved = userJpaRepository.save(userDTO.toEntity());
+        return saved.getId();
     }
 
     // ID로 조회
@@ -35,12 +39,9 @@ public class UserService {
     // 이메일로 조회
     @Transactional(readOnly = true)
     public UserResponseDTO findByEmail(String email) {
-        User user = userJpaRepository.findByEmail(email);
-        if(user == null) {
-            throw new UserNotFoundException();
-        } else {
-            return new UserResponseDTO(user);
-        }
+        User user = userJpaRepository.findByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
+        return new UserResponseDTO(user);
     }
 
     // 모든 유저 조회
@@ -58,7 +59,7 @@ public class UserService {
         User modifiedUser = userJpaRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
 
-        //modifiedUser.setNickName(userRequestDTO.getNickName());
+        modifiedUser.updateNickName(userRequestDTO.getNickname());
         return id;
     }
 
@@ -67,5 +68,4 @@ public class UserService {
     public void delete(Long id) {
         userJpaRepository.deleteById(id);
     }
-
 }

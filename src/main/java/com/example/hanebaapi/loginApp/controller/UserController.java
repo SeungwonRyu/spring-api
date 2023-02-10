@@ -1,12 +1,14 @@
 package com.example.hanebaapi.loginApp.controller;
 
-import com.example.hanebaapi.loginApp.domain.dto.UserRequestDTO;
-import com.example.hanebaapi.loginApp.domain.dto.UserResponseDTO;
+import com.example.hanebaapi.loginApp.domain.dto.user.UserRequestDTO;
+import com.example.hanebaapi.loginApp.domain.dto.user.UserResponseDTO;
 import com.example.hanebaapi.loginApp.model.response.CommonResult;
 import com.example.hanebaapi.loginApp.model.response.ListResult;
 import com.example.hanebaapi.loginApp.model.response.SingleResult;
 import com.example.hanebaapi.loginApp.service.UserService;
 import com.example.hanebaapi.loginApp.service.response.ResponseService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,26 +38,14 @@ public class UserController {
         return responseService.getListResult(userService.findAllUser());
     }
 
-    // 유저 등록
-    @PostMapping("/user")
-    public SingleResult<Long> save(@RequestParam String email, @RequestParam String name) {
-        UserRequestDTO user = UserRequestDTO.builder()
-                .email(email)
-                .name(name)
-                .build();
-
-        return responseService.getSingleResult(userService.save(user));
-    }
-
     // 유저 정보 수정
     @PutMapping("/user")
-    public SingleResult<Long> modify(@RequestParam String email, @RequestParam String name) {
+    public SingleResult<Long> update(@RequestParam Long id, @RequestParam String nickname) {
         UserRequestDTO user = UserRequestDTO.builder()
-                .email(email)
-                .name(name)
+                .nickname(nickname)
                 .build();
 
-        return responseService.getSingleResult(userService.save(user));
+        return responseService.getSingleResult(userService.update(id, user));
     }
 
     // 유저 삭제
@@ -64,16 +54,4 @@ public class UserController {
         userService.delete(id);
         return responseService.getSuccessResult();
     }
-
-    /*
-    @GetMapping("/findUserByName/{name}")
-    public List<User> findUserByName(@PathVariable String name) {
-        return userJpaRepository.findByName(name);
-    }
-
-    @GetMapping("/findUserByEmail/{email}")
-    public User findUserByEmail(@PathVariable String email) {
-        return userJpaRepository.findByEmail(email);
-    }
-    */
 }
