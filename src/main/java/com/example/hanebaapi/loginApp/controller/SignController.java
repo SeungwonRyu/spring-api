@@ -10,7 +10,6 @@ import com.example.hanebaapi.loginApp.service.UserService;
 import com.example.hanebaapi.loginApp.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -22,7 +21,6 @@ public class SignController {
     private final JwtProvider jwtProvider;
     private final ResponseService responseService;
     private final SignService signService;
-    private final PasswordEncoder passwordEncoder;
 
     // 로그인
     @PostMapping("/login")

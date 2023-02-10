@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
-    @Autowired
     private final UserJpaRepository userJpaRepository;
 
     @Override
