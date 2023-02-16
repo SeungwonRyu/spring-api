@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class RefreshToken extends BaseTimeEntity {
+    //private String id;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long key;
     @Column(nullable = false)
     private String token;
