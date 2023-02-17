@@ -19,6 +19,4 @@ public class UserRequestDTO {
                 .nickname(nickname)
                 .build();
     }
-
-
 }

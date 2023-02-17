@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1")
+@CrossOrigin(originPatterns = "http://localhost:3000")
 public class SignController {
     private final UserService userService;
     private final JwtProvider jwtProvider;

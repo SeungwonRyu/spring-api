@@ -1,3 +1,6 @@
 spring:
   profiles:
     include: jwt
+
+server:
+  port: 9090
